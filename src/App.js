@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React , { Component } from 'react';
+import Slider from './components/Slider';
+import "./App.css";
+import Data from './components/Sliderdata';
+import Intro from './components/Intro';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+        currentIndex : 0
+    }
 }
-
-export default App;
+componentDidMount(){
+    this.timer = setInterval(() => this.moveSlide(),5000)
+}
+// oru oru 5 sec kkum movesilde function execute aagum
+moveSlide(){
+    if(this.state.currentIndex === Data.length-1){
+        this.setState({
+            currentIndex : 0
+        })
+    } else {
+        this.setState({
+            currentIndex : this.state.currentIndex+1
+        })
+    }
+}
+  render(){
+    return (
+      <div className = "App">
+          <div className = "slider-container">
+              <Slider currentIndex = {this.state.currentIndex}/>
+          </div>
+          <div className = "intro">
+          <Intro />
+          </div>
+      </div>
+  )
+}
+}
